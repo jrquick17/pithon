@@ -11,6 +11,10 @@ import math
 import random
 
 
+class Target(Widget):
+    radius = NumericProperty(500)
+
+
 class Dart(RelativeLayout):
     x = NumericProperty(0)
     y = NumericProperty(0)
@@ -21,7 +25,7 @@ class Dart(RelativeLayout):
     def is_hit(self):
         return self.g == 1
 
-    def throw(self):
+    def throw(self, add_hit):
         self.x = random.randint(0, 500)
         self.y = random.randint(0, 500)
 
@@ -31,35 +35,42 @@ class Dart(RelativeLayout):
         else:
             self.r = 1
 
+        return is_hit
+
 
 class DartBoard(Widget):
-    target = ObjectProperty(None)
-
     width = NumericProperty(500)
     height = NumericProperty(500)
 
-    radius = NumericProperty(500)
+    target = ObjectProperty(Target)
 
 
-class PiDarts(Widget):
-    board = ObjectProperty(None)
-
+class ScoreBoard(Widget):
     estimate = NumericProperty(0)
     hits = NumericProperty(0)
     misses = NumericProperty(0)
 
-    def update(self, dt):
-        ball = Dart()
-        ball.throw()
-
-        if ball.is_hit():
+    def add_to_result(self, is_hit):
+        if is_hit:
             self.hits += 1
         else:
             self.misses += 1
 
         self.estimate = (self.hits / (self.hits + self.misses)) * 4
 
-        self.add_widget(ball)
+
+class PiDarts(Widget):
+    dart_board = ObjectProperty(DartBoard)
+    score_board = ObjectProperty(ScoreBoard())
+
+    def update(self, dt):
+        dart = Dart()
+
+        is_hit = dart.throw(self.dart_board)
+
+        self.score_board.add_to_result(is_hit)
+
+        self.add_widget(dart)
 
 
 class PiApp(App):
@@ -67,7 +78,7 @@ class PiApp(App):
         if True:
             game = PiDarts()
 
-        Clock.schedule_interval(game.update, 30.0 / 60.0)
+        Clock.schedule_interval(game.update, 1.0 / 60.0)
 
         return game
 
