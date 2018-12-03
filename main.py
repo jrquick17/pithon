@@ -77,10 +77,27 @@ class PiDarts(Widget):
         self.add_widget(dart)
 
 
+class PiSeries(Widget):
+    score_board = ObjectProperty(ScoreBoard())
+
+    i = 1
+    plus = True
+    estimate = NumericProperty(0)
+
+    def update(self, dt):
+        self.estimate += 4/self.i * (1, -1)[self.plus]
+
+        self.i += 2
+        self.plus = self.plus == False
+
+
+
 class PiApp(App):
     def build(self):
-        if True:
+        if False:
             game = PiDarts()
+        else:
+            game = PiSeries()
 
         Clock.schedule_interval(game.update, 1.0 / 60.0)
 
