@@ -1,5 +1,6 @@
 from kivy.app import App
 from kivy.uix.label import Label
+from kivy.animation import Animation
 from kivy.uix.widget import Widget
 from kivy.properties import BooleanProperty, NumericProperty, ReferenceListProperty, ObjectProperty
 from kivy.uix.relativelayout import RelativeLayout
@@ -25,7 +26,7 @@ class Dart(RelativeLayout):
     def is_hit(self):
         return self.g == 1
 
-    def throw(self, add_hit):
+    def throw(self):
         self.x = random.randint(0, 500)
         self.y = random.randint(0, 500)
 
@@ -34,6 +35,9 @@ class Dart(RelativeLayout):
             self.g = 1
         else:
             self.r = 1
+
+        animation = Animation(size=(1,1))
+        animation.start(self)
 
         return is_hit
 
@@ -66,7 +70,7 @@ class PiDarts(Widget):
     def update(self, dt):
         dart = Dart()
 
-        is_hit = dart.throw(self.dart_board)
+        is_hit = dart.throw()
 
         self.score_board.add_to_result(is_hit)
 
