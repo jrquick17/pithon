@@ -32,14 +32,12 @@ class Dart(RelativeLayout):
             self.r = 1
 
 
-class Board(Widget):
+class DartBoard(Widget):
     target = ObjectProperty(None)
 
     width = NumericProperty(500)
     height = NumericProperty(500)
 
-
-class Target(Widget):
     radius = NumericProperty(500)
 
 
