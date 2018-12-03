@@ -1,0 +1,52 @@
+#:kivy 1.0.9
+
+<Board>:
+    canvas:
+        Color:
+            rgba: 0, 0, 0, 1
+        Rectangle:
+            pos:  0, 0
+            size: self.height, self.width
+
+    Target:
+        id: target
+        center: self.parent.center
+
+<Dart>:
+    size: 1, 1
+    canvas:
+        Color:
+            rgba: self.r, self.g, 0, 1
+        Ellipse:
+            pos: 0, 0
+            size: self.size
+
+<Target>:
+    canvas:
+        Color:
+            rgba: 1, 1, 1, 1
+        Ellipse:
+            pos: 0, 0
+            size: self.radius, self.radius
+
+<PiDarts>:
+    canvas:
+        Color:
+            rgb: 0.5, 0.5, 0.5, 1
+        Rectangle:
+            size: self.width, self.height
+    Board:
+        id: board
+        center: self.parent.center
+    Label:
+        text: "Hits: " + str(root.hits)
+        markup: True
+        pos: 25, root.height - 60
+    Label:
+        text: "Misses: " + str(root.misses)
+        markup: True
+        pos: 25, root.height - 85
+    Label:
+        text: "Estimate: " + str(root.estimate)
+        markup: True
+        pos: 25, root.height - 110
