@@ -12,6 +12,21 @@ import math
 import random
 
 
+class Game(Widget):
+    estimate = 0
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+        Clock.schedule_interval(self.update, 1.0 / 60.0)
+
+    def get_estimate(self):
+        return self.estimate
+
+    def update(self):
+        pass
+
+
 class Target(Widget):
     radius = NumericProperty(500)
 
@@ -63,7 +78,7 @@ class ScoreBoard(Widget):
         self.estimate = (self.hits / (self.hits + self.misses)) * 4
 
 
-class PiDarts(Widget):
+class PiDarts(Game):
     dart_board = ObjectProperty(DartBoard)
     score_board = ObjectProperty(ScoreBoard())
 
@@ -76,8 +91,10 @@ class PiDarts(Widget):
 
         self.add_widget(dart)
 
+        super().update()
 
-class PiSeries(Widget):
+
+class PiSeries(Game):
     score_board = ObjectProperty(ScoreBoard())
 
     i = 1
@@ -90,6 +107,7 @@ class PiSeries(Widget):
         self.i += 2
         self.plus = self.plus == False
 
+        super().update()
 
 
 class PiApp(App):
@@ -99,10 +117,9 @@ class PiApp(App):
         else:
             game = PiSeries()
 
-        Clock.schedule_interval(game.update, 1.0 / 60.0)
-
         return game
 
 
 if __name__ == '__main__':
     PiApp().run()
+
