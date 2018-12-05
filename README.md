@@ -11,3 +11,11 @@ cd dependencies
 cd kivy-md
 py setup.py install
 ```
+
+### Syntax Highlighting
+#### IntelliJ
+```bash
+USE_OSX_FRAMEWORKS=0 pip3 install kivy
+```
+
+*Within IntelliJ: File->Import Settings->Select 'intellij-settings.jar'
