@@ -1,46 +1,38 @@
 #:kivy 1.0.9
-
-<DartBoard>:
-    canvas:
-        Color:
-            rgba: 0, 0, 0, 1
-        Rectangle:
-            pos:  0, 0
-            size: self.height, self.width
-
-    Target:
-        id: target
-
-<Target>:
-    canvas:
-        Color:
-            rgba: 1, 1, 1, 1
-        Ellipse:
-            pos: 0, 0
-            size: self.radius, self.radius
-
 <Dart>:
     size: 20, 20
     canvas:
         Color:
             rgba: self.r, self.g, 0, 1
         Ellipse:
-            pos: 0, 0
+            pos: self.x / 100 * root.width, self.y / 100 * root.height
             size: self.size
 
 <PiDarts>:
+    size_hint: 1, 1
     canvas:
         Color:
             rgb: 0.5, 0.5, 0.5, 1
         Rectangle:
-            size: self.width, self.height
-    DartBoard:
-        id: dart_board
-        center: self.parent.center
-    ScoreBoard:
-        id: score_board
-        center_x: self.parent.center_x
-        top: self.parent.top - self.height
+            size: self.height, self.height
+    #    DartBoard:
+    canvas:
+        Color:
+            rgba: 0, 0, 0, 1
+        Rectangle:
+            pos:  0, 0
+            size: self.height, self.height
+    #    Target:
+    canvas:
+        Color:
+            rgba: 1, 1, 1, 1
+        Ellipse:
+            pos: 0, 0
+            size: self.height, self.height
+#    ScoreBoard:
+#        id: score_board
+#        center_x: self.parent.center_x
+#        top: self.parent.top - self.height
 
 <PiSeries>:
     canvas:
