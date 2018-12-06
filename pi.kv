@@ -3,21 +3,24 @@
     pos: 0, 0
     size_hint: 1, 1
     Label:
-        color: 1, 1, 1, 1
+        color: 1, 0, 0, 1
         text: "Estimate: " + str(root.estimate)
         markup: True
-        pos: 0, 0
+        center_x: self.parent.center_x
+        center_y: self.parent.center_y
     Label:
-        color: 1, 1, 1, 1
+        color: 1, 0, 0, 1
         text: "PI: " + str(root.PI)
         markup: True
-        x: 0
-        y: 15
+        center_x: self.parent.center_x
+        center_y: self.parent.center_y + 15
     Label:
-        color: 1, 1, 1, 1
+        color: 1, 0, 0, 1
         text: "Iterations: " + str(root.estimate)
         markup: True
-        pos: 0, 30
+        center_x: self.parent.center_x
+        center_y: self.parent.center_y + 30
+
 
 <Dart>:
     size: 20, 20
@@ -67,27 +70,27 @@
         markup: True
         pos: root.center_x, root.center_y + 30
 
-<ScoreBoard>:
-    size: 500, 100
-    canvas:
-        Color:
-            rgb: 0, 0, 0, 1
-        Rectangle:
-            size: self.width, self.height
-            pos: self.parent.center_x - (self.width / 2), self.parent.height - self.height - 25
-    Label:
-        color: 1, 1, 1, 1
-        text: "Hits: " + str(root.hits)
-        markup: True
-        pos: root.center_x, root.center_y - 10
-    Label:
-        color: 1, 1, 1, 1
-        text: "Misses: " + str(root.misses)
-        markup: True
-        pos: root.center_x, root.center_y + 10
-    Label:
-        color: 1, 1, 1, 1
-        text: "Estimate: " + str(root.estimate)
-        markup: True
-        pos: root.center_x, root.center_y + 30
+#<ScoreBoard>:
+#    size: 500, 100
+#    canvas:
+#        Color:
+#            rgb: 0, 0, 0, 1
+#        Rectangle:
+#            size: self.width, self.height
+#            pos: self.parent.center_x - (self.width / 2), self.parent.height - self.height - 25
+#    Label:
+#        color: 1, 1, 1, 1
+#        text: "Hits: " + str(root.hits)
+#        markup: True
+#        pos: root.center_x, root.center_y - 10
+#    Label:
+#        color: 1, 1, 1, 1
+#        text: "Misses: " + str(root.misses)
+#        markup: True
+#        pos: root.center_x, root.center_y + 10
+#    Label:
+#        color: 1, 1, 1, 1
+#        text: "Estimate: " + str(root.estimate)
+#        markup: True
+#        pos: root.center_x, root.center_y + 30
 

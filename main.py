@@ -29,7 +29,7 @@ class Game(Widget):
         Clock.schedule_interval(self.update, 1.0 / 60.0)
 
     def get_estimate(self):
-        return self.estimate
+        pass
 
     def check_accuracy(self):
         # TODO
@@ -78,8 +78,7 @@ class Dart(RelativeLayout):
         return is_hit
 
 
-class ScoreBoard(Widget):
-    estimate = ObjectProperty(Decimal(0))
+class PiDarts(Game):
     hits = NumericProperty(0)
     misses = NumericProperty(0)
 
@@ -89,11 +88,8 @@ class ScoreBoard(Widget):
         else:
             self.misses = self.misses + 1
 
-        self.estimate = Decimal(self.hits) / Decimal(self.hits + self.misses) * Decimal(4)
-
-
-class PiDarts(Game):
-    score_board = ObjectProperty(ScoreBoard())
+    def get_estimate(self):
+        return Decimal(self.hits) / Decimal(self.hits + self.misses) * Decimal(4)
 
     def update(self, dt):
         dart = Dart()
@@ -102,21 +98,19 @@ class PiDarts(Game):
 
         is_hit = dart.throw()
 
-        self.score_board.add_to_result(is_hit)
+        self.add_to_result(is_hit)
 
         super().update()
 
 
 class PiSeries(Game):
-    score_board = ObjectProperty(ScoreBoard())
-
     i = 1
     plus = True
-    estimate = ObjectProperty(Decimal(0))
+
+    def get_estimate(self):
+        return Decimal(-4) / Decimal(self.i * (1, -1)[self.plus])
 
     def update(self, dt):
-        self.estimate += Decimal(-4) / Decimal(self.i * (1, -1)[self.plus])
-
         self.i += 2
         self.plus = self.plus == False
 
