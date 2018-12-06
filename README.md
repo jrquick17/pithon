@@ -6,4 +6,8 @@ brew install sdl2 sdl2_image sdl2_ttf sdl2_mixer gstreamer
 
 pip install Cython==0.26.1
 pip install kivy
+
+cd dependencies
+cd kivy-md
+py setup.py install
 ```
