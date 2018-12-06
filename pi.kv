@@ -1,4 +1,24 @@
 #:kivy 1.0.9
+<Game>:
+    pos: 0, 0
+    size_hint: 1, 1
+    Label:
+        color: 1, 1, 1, 1
+        text: "Estimate: " + str(root.estimate)
+        markup: True
+        pos: 0, 0
+    Label:
+        color: 1, 1, 1, 1
+        text: "PI: " + str(root.PI)
+        markup: True
+        x: 0
+        y: 15
+    Label:
+        color: 1, 1, 1, 1
+        text: "Iterations: " + str(root.estimate)
+        markup: True
+        pos: 0, 30
+
 <Dart>:
     size: 20, 20
     canvas:

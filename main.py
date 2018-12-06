@@ -16,10 +16,12 @@ import random
 
 
 class Game(Widget):
-    PI = Decimal('3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679')
+    PI = ObjectProperty(
+        Decimal('3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679')
+    )
 
-    estimate = Decimal(0)
-    iterations = 0
+    estimate = ObjectProperty(Decimal(0))
+    iterations = NumericProperty(0)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -34,6 +36,7 @@ class Game(Widget):
         pass
 
     def update(self):
+        self.estimate = self.get_estimate()
         self.iterations += 1
 
         self.check_accuracy()
@@ -122,7 +125,7 @@ class PiSeries(Game):
 
 class PiApp(App):
     def build(self):
-        if False:
+        if True:
             game = PiDarts()
         else:
             game = PiSeries()
