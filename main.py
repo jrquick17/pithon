@@ -29,6 +29,10 @@ class Game(Widget):
     def get_estimate(self):
         return self.estimate
 
+    def check_accuracy(self):
+        # TODO
+        pass
+
     def update(self):
         self.iterations += 1
 
