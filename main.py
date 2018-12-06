@@ -1,3 +1,5 @@
+from decimal import *
+getcontext().prec = 100
 from kivy.app import App
 from kivy.animation import Animation
 from kivy.clock import Clock
@@ -14,7 +16,10 @@ import random
 
 
 class Game(Widget):
-    estimate = 0
+    PI = Decimal('3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679')
+
+    estimate = Decimal(0)
+    iterations = 0
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -25,7 +30,12 @@ class Game(Widget):
         return self.estimate
 
     def update(self):
-        pass
+        self.iterations += 1
+
+        self.check_accuracy()
+
+    def get_accuracy(self):
+        return # correct digits and # number of iterations per
 
 
 class Dart(RelativeLayout):
@@ -62,17 +72,17 @@ class Dart(RelativeLayout):
 
 
 class ScoreBoard(Widget):
-    estimate = NumericProperty(0)
+    estimate = ObjectProperty(Decimal(0))
     hits = NumericProperty(0)
     misses = NumericProperty(0)
 
     def add_to_result(self, is_hit):
         if is_hit:
-            self.hits += 1
+            self.hits = self.hits + 1
         else:
-            self.misses += 1
+            self.misses = self.misses + 1
 
-        self.estimate = (self.hits / (self.hits + self.misses)) * 4
+        self.estimate = Decimal(self.hits) / Decimal(self.hits + self.misses) * Decimal(4)
 
 
 class PiDarts(Game):
@@ -80,6 +90,7 @@ class PiDarts(Game):
 
     def update(self, dt):
         dart = Dart()
+
         self.add_widget(dart)
 
         is_hit = dart.throw()
@@ -94,10 +105,10 @@ class PiSeries(Game):
 
     i = 1
     plus = True
-    estimate = NumericProperty(0)
+    estimate = ObjectProperty(Decimal(0))
 
     def update(self, dt):
-        self.estimate += 4/self.i * (1, -1)[self.plus]
+        self.estimate += Decimal(-4) / Decimal(self.i * (1, -1)[self.plus])
 
         self.i += 2
         self.plus = self.plus == False
@@ -107,7 +118,7 @@ class PiSeries(Game):
 
 class PiApp(App):
     def build(self):
-        if True:
+        if False:
             game = PiDarts()
         else:
             game = PiSeries()
