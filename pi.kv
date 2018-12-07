@@ -1,5 +1,7 @@
 #:kivy 1.0.9
+
 <Game>:
+    speed_slider: speed_slider
     pos: 0, 0
     size_hint: 1, 1
     Label:
@@ -20,6 +22,19 @@
         markup: True
         center_x: self.parent.center_x
         center_y: self.parent.center_y + 30
+    Label:
+        color: 1, 0, 0, 1
+        text: "Speed: " + str(root.speed)
+        markup: True
+        pos: 0, 0
+    MDSlider:
+        id: speed_slider
+        min: 0
+        max: 100
+        x: 0
+        y: 0
+        height: 100
+        width: self.parent.width
 
 
 <Dart>:

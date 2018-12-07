@@ -11,6 +11,8 @@ from kivy.uix.label import Label
 from kivy.uix.relativelayout import RelativeLayout
 from kivy.uix.widget import Widget
 from kivy.vector import Vector
+from kivymd.slider import *
+from kivymd.theming import ThemeManager
 import math
 import random
 
@@ -22,14 +24,33 @@ class Game(Widget):
 
     estimate = ObjectProperty(Decimal(0))
     iterations = NumericProperty(0)
+    speed = NumericProperty(0)
+    speed_slider = ObjectProperty(None)
+
+    schedule = False
 
     def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+        super(Game, self).__init__(**kwargs)
 
-        Clock.schedule_interval(self.update, 1.0 / 60.0)
+        self.speed_slider.bind(value=self.set_speed)
+        self.speed_slider.value = 50
 
     def get_estimate(self):
         pass
+
+    def set_speed(self, slider, value):
+        if value == 0:
+            self.speed = 0
+        else:
+            self.speed = abs(1 * ((99 - value) / 100))
+
+        if self.schedule:
+            self.schedule.cancel()
+
+            self.schedule = False
+
+        if self.speed != 0:
+            self.schedule = Clock.schedule_interval(self.update, self.speed)
 
     def check_accuracy(self):
         # TODO
@@ -118,6 +139,8 @@ class PiSeries(Game):
 
 
 class PiApp(App):
+    theme_cls = ThemeManager()
+
     def build(self):
         if True:
             game = PiDarts()
