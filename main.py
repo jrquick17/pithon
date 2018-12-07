@@ -1,5 +1,5 @@
 from decimal import *
-getcontext().prec = 100
+getcontext().prec = 50
 from kivy.app import App
 from kivy.animation import Animation
 from kivy.clock import Clock
@@ -17,7 +17,7 @@ import random
 
 class Game(Widget):
     PI = ObjectProperty(
-        Decimal('3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679')
+        Decimal('3.14159265358979323846264338327950288419716939937510')
     )
 
     estimate = ObjectProperty(Decimal(0))
