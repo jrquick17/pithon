@@ -9,6 +9,7 @@ from kivy.uix.button import Button
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.label import Label
 from kivy.uix.relativelayout import RelativeLayout
+from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.widget import Widget
 from kivy.vector import Vector
 from kivymd.slider import *
@@ -142,12 +143,17 @@ class PiApp(App):
     theme_cls = ThemeManager()
 
     def build(self):
-        if True:
-            game = PiDarts()
-        else:
-            game = PiSeries()
+        sm = ScreenManager()
 
-        return game
+        screen = Screen(name='Pi Darts')
+        screen.add_widget(PiDarts())
+        sm.add_widget(screen)
+
+        screen = Screen(name='Pi Darts')
+        screen.add_widget(PiDarts())
+        sm.add_widget(screen)
+
+        return screen
 
 
 if __name__ == '__main__':
