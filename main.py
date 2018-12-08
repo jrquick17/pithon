@@ -12,6 +12,22 @@ from kivy.uix.relativelayout import RelativeLayout
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.widget import Widget
 from kivy.vector import Vector
+from kivy.lang import Builder
+from kivy.metrics import dp
+from kivy.properties import ObjectProperty
+from kivy.uix.image import Image
+from kivymd.bottomsheet import MDListBottomSheet, MDGridBottomSheet
+from kivymd.button import MDIconButton
+from kivymd.date_picker import MDDatePicker
+from kivymd.dialog import MDDialog
+from kivymd.label import MDLabel
+from kivymd.list import ILeftBody, ILeftBodyTouch, IRightBodyTouch, BaseListItem
+from kivymd.material_resources import DEVICE_TYPE
+from kivymd.navigationdrawer import MDNavigationDrawer, NavigationDrawerHeaderBase
+from kivymd.selectioncontrols import MDCheckbox
+from kivymd.snackbar import Snackbar
+from kivymd.theming import ThemeManager
+from kivymd.time_picker import MDTimePicker
 from kivymd.slider import *
 from kivymd.theming import ThemeManager
 import math
@@ -25,7 +41,7 @@ class Game(Widget):
 
     estimate = ObjectProperty(Decimal(0))
     iterations = NumericProperty(0)
-    speed = NumericProperty(0)
+    speed = NumericProperty(50)
     speed_slider = ObjectProperty(None)
 
     schedule = False
@@ -33,8 +49,10 @@ class Game(Widget):
     def __init__(self, **kwargs):
         super(Game, self).__init__(**kwargs)
 
-        self.speed_slider.bind(value=self.set_speed)
-        self.speed_slider.value = 50
+        self.set_speed(False, 50)
+
+        # self.speed_slider.bind(value=self.set_speed)
+        # self.speed_slider.value = 50
 
     def get_estimate(self):
         pass
@@ -57,7 +75,7 @@ class Game(Widget):
         # TODO
         pass
 
-    def update(self):
+    def update(self, dt):
         self.estimate = self.get_estimate()
         self.iterations += 1
 
@@ -104,6 +122,9 @@ class PiDarts(Game):
     hits = NumericProperty(0)
     misses = NumericProperty(0)
 
+    def __init__(self, **kwargs):
+        super(PiDarts, self).__init__(**kwargs)
+
     def add_to_result(self, is_hit):
         if is_hit:
             self.hits = self.hits + 1
@@ -122,12 +143,15 @@ class PiDarts(Game):
 
         self.add_to_result(is_hit)
 
-        super().update()
+        super().update(dt)
 
 
 class PiSeries(Game):
     i = 1
     plus = True
+
+    def __init__(self, **kwargs):
+        super(PiSeries, self).__init__(**kwargs)
 
     def get_estimate(self):
         return Decimal(-4) / Decimal(self.i * (1, -1)[self.plus])
@@ -136,25 +160,45 @@ class PiSeries(Game):
         self.i += 2
         self.plus = self.plus == False
 
-        super().update()
+        super().update(dt)
 
+
+class HackedDemoNavDrawer(MDNavigationDrawer):
+    # DO NOT USE
+    def add_widget(self, widget, index=0):
+        if issubclass(widget.__class__, BaseListItem):
+            self._list.add_widget(widget, index)
+            if len(self._list.children) == 1:
+                widget._active = True
+                self.active_item = widget
+            # widget.bind(on_release=lambda x: self.panel.toggle_state())
+            widget.bind(on_release=lambda x: x._set_active(True, list=self))
+        elif issubclass(widget.__class__, NavigationDrawerHeaderBase):
+            self._header_container.add_widget(widget)
+        else:
+            super(MDNavigationDrawer, self).add_widget(widget, index)
+
+class TheApp(Widget):
+    pass
 
 class PiApp(App):
     theme_cls = ThemeManager()
+    title = "PiThon"
 
     def build(self):
-        sm = ScreenManager()
+        main_widget = Builder.load_file('pi.kv')
 
-        screen = Screen(name='Pi Darts')
-        screen.add_widget(PiDarts())
-        sm.add_widget(screen)
+        # self.theme_cls.theme_style = 'Dark'
+        self.bottom_navigation_remove_mobile(main_widget)
 
-        screen = Screen(name='Pi Darts')
-        screen.add_widget(PiDarts())
-        sm.add_widget(screen)
+        return main_widget
 
-        return screen
-
+    def bottom_navigation_remove_mobile(self, widget):
+        # Removes some items from bottom-navigation demo when on mobile
+        if DEVICE_TYPE == 'mobile':
+            widget.ids.bottom_navigation_demo.remove_widget(widget.ids.bottom_navigation_desktop_2)
+        if DEVICE_TYPE == 'mobile' or DEVICE_TYPE == 'tablet':
+            widget.ids.bottom_navigation_demo.remove_widget(widget.ids.bottom_navigation_desktop_1)
 
 if __name__ == '__main__':
     PiApp().run()
