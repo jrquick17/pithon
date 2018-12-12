@@ -64,6 +64,37 @@
         Ellipse:
             pos: 0, 0
             size: self.height, self.height
+    Label:
+        color: 1, 0, 0, 1
+        text: "Estimate: " + str(self.parent.estimate)
+        markup: True
+        center_x: self.parent.center_x
+        center_y: self.parent.center_y
+    Label:
+        color: 1, 0, 0, 1
+        text: "PI: " + str(self.parent.PI)
+        markup: True
+        center_x: self.parent.center_x
+        center_y: self.parent.center_y + 15
+    Label:
+        color: 1, 0, 0, 1
+        text: "Iterations: " + str(self.parent.iterations)
+        markup: True
+        center_x: self.parent.center_x
+        center_y: self.parent.center_y + 30
+    Label:
+        color: 1, 0, 0, 1
+        text: "Speed: " + str(self.parent.speed)
+        markup: True
+        pos: 0, 0
+#     MDSlider:
+#     id: speed_slider
+#     min: 0
+#     max: 100
+#     x: 0
+#     y: 0
+#     height: 100
+#     width: self.parent.width
 
 <PiSeries>:
     canvas:
@@ -112,37 +143,6 @@ NavigationLayout:
 #                    speed_slider: speed_slider
                     pos: 0, 0
                     size_hint: 1, 1
-                    Label:
-                        color: 1, 0, 0, 1
-                        text: "Estimate: " + str(self.parent.estimate)
-                        markup: True
-                        center_x: self.parent.center_x
-                        center_y: self.parent.center_y
-                    Label:
-                        color: 1, 0, 0, 1
-                        text: "PI: " + str(self.parent.PI)
-                        markup: True
-                        center_x: self.parent.center_x
-                        center_y: self.parent.center_y + 15
-                    Label:
-                        color: 1, 0, 0, 1
-                        text: "Iterations: " + str(self.parent.iterations)
-                        markup: True
-                        center_x: self.parent.center_x
-                        center_y: self.parent.center_y + 30
-                    Label:
-                        color: 1, 0, 0, 1
-                        text: "Speed: " + str(self.parent.speed)
-                        markup: True
-                        pos: 0, 0
-#                    MDSlider:
-#                        id: speed_slider
-#                        min: 0
-#                        max: 100
-#                        x: 0
-#                        y: 0
-#                        height: 100
-#                        width: self.parent.width
             Screen:
                 name: 'series'
                 PiSeries:
