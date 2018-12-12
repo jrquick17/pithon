@@ -42,7 +42,7 @@ class Game(Widget):
     estimate = ObjectProperty(Decimal(0))
     iterations = NumericProperty(0)
     speed = NumericProperty(50)
-    speed_slider = ObjectProperty(None)
+    # speed_slider = ObjectProperty(None)
 
     schedule = False
 

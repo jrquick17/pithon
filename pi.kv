@@ -58,47 +58,44 @@
 
 
 <PiDarts>:
+    id: darts
     size_hint: 1, 1
-    canvas:
-        Color:
-            rgb: 0.5, 0.5, 0.5, 1
-        Rectangle:
-            size: self.height, self.height
-    canvas:
-        Color:
-            rgba: 0, 0, 0, 1
-        Rectangle:
-            pos:  0, 0
-            size: self.height, self.height
-    canvas:
-        Color:
-            rgba: 1, 1, 1, 1
-        Ellipse:
-            pos: 0, 0
-            size: self.height, self.height
-    Label:
-        color: 1, 0, 0, 1
-        text: 'Estimate: ' + str(self.parent.estimate)
-        markup: True
-        center_x: self.parent.center_x
-        center_y: self.parent.center_y
-    Label:
-        color: 1, 0, 0, 1
-        text: 'Pi: ' + str(self.parent.PI)
-        markup: True
-        center_x: self.parent.center_x
-        center_y: self.parent.center_y + 15
-    Label:
-        color: 1, 0, 0, 1
-        text: 'Iterations: ' + str(self.parent.iterations)
-        markup: True
-        center_x: self.parent.center_x
-        center_y: self.parent.center_y + 30
-#    Label:
-#        color: 1, 0, 0, 1
-#        text: 'Speed: ' + str(root.speed)
-#        markup: True
-#        pos: 0, 0
+    RelativeLayout:
+        canvas:
+            Color:
+                rgb: 0.5, 0.5, 0.5, 1
+            Rectangle:
+                size: self.height, self.height
+        canvas:
+            Color:
+                rgba: 0, 0, 0, 1
+            Rectangle:
+                pos:  0, 0
+                size: self.height, self.height
+        canvas:
+            Color:
+                rgba: 1, 1, 1, 1
+            Ellipse:
+                pos: 0, 0
+                size: self.height, self.height
+    GridLayout:
+        pos: 0, self.parent.top - self.height
+        cols: 1
+        rows: 3
+        Label:
+            color: 1, 0, 0, 1
+            text: 'Estimate: ' + str(darts.estimate)
+        Label:
+            color: 1, 0, 0, 1
+            text: 'Pi: ' + str(darts.PI)
+        Label:
+            color: 1, 0, 0, 1
+            text: 'Iterations: ' + str(darts.iterations)
+#        Label:
+#            color: 1, 0, 0, 1
+#            text: 'Speed: ' + str(root.speed)
+#            markup: True
+#            pos: 0, 0
 
 <PiSeries>:
     canvas:
