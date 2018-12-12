@@ -45,6 +45,18 @@
             size: self.size
 
 
+#<Game>:
+#    speed_slider: speed_slider
+#    MDSlider:
+#        id: speed_slider
+#        min: 0
+#        max: 100
+#        x: 0
+#        y: 0
+#        height: 100
+#        width: self.parent.width
+
+
 <PiDarts>:
     size_hint: 1, 1
     canvas:
@@ -82,19 +94,11 @@
         markup: True
         center_x: self.parent.center_x
         center_y: self.parent.center_y + 30
-    Label:
-        color: 1, 0, 0, 1
-        text: 'Speed: ' + str(self.parent.speed)
-        markup: True
-        pos: 0, 0
-#     MDSlider:
-#     id: speed_slider
-#     min: 0
-#     max: 100
-#     x: 0
-#     y: 0
-#     height: 100
-#     width: self.parent.width
+#    Label:
+#        color: 1, 0, 0, 1
+#        text: 'Speed: ' + str(root.speed)
+#        markup: True
+#        pos: 0, 0
 
 <PiSeries>:
     canvas:
@@ -140,7 +144,6 @@ NavigationLayout:
             Screen:
                 name: 'darts'
                 PiDarts:
-#                    speed_slider: speed_slider
                     pos: 0, 0
                     size_hint: 1, 1
             Screen:

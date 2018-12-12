@@ -51,6 +51,9 @@ class Game(Widget):
 
         self.set_speed(False, 50)
 
+        # self.speed_slider.bind(value=self.set_speed)
+        # self.speed_slider.value = 50
+
     def get_estimate(self):
         pass
 
