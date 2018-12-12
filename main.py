@@ -51,9 +51,6 @@ class Game(Widget):
 
         self.set_speed(False, 50)
 
-        # self.speed_slider.bind(value=self.set_speed)
-        # self.speed_slider.value = 50
-
     def get_estimate(self):
         pass
 
@@ -162,21 +159,6 @@ class PiSeries(Game):
 
         super().update(dt)
 
-
-class HackedDemoNavDrawer(MDNavigationDrawer):
-    # DO NOT USE
-    def add_widget(self, widget, index=0):
-        if issubclass(widget.__class__, BaseListItem):
-            self._list.add_widget(widget, index)
-            if len(self._list.children) == 1:
-                widget._active = True
-                self.active_item = widget
-            # widget.bind(on_release=lambda x: self.panel.toggle_state())
-            widget.bind(on_release=lambda x: x._set_active(True, list=self))
-        elif issubclass(widget.__class__, NavigationDrawerHeaderBase):
-            self._header_container.add_widget(widget)
-        else:
-            super(MDNavigationDrawer, self).add_widget(widget, index)
 
 class TheApp(Widget):
     pass
