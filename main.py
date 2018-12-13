@@ -1,5 +1,5 @@
 from decimal import *
-getcontext().prec = 50
+getcontext().prec = 51
 from kivy.app import App
 from kivy.animation import Animation
 from kivy.clock import Clock
@@ -132,7 +132,11 @@ class PiDarts(Game):
             self.misses = self.misses + 1
 
     def get_estimate(self):
-        return Decimal(self.hits) / Decimal(self.hits + self.misses) * Decimal(4)
+        return Decimal(
+            Decimal(self.hits) / Decimal(self.hits + self.misses) * Decimal(4)
+        ).quantize(
+            Decimal('1.00000000000000000000000000000000000000000000000000')
+        )
 
     def update(self, dt):
         dart = Dart()

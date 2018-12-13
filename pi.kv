@@ -61,6 +61,7 @@
     id: darts
     size_hint: 1, 1
     RelativeLayout:
+        pos: 0, 0
         canvas:
             Color:
                 rgb: 0.5, 0.5, 0.5, 1
@@ -79,15 +80,19 @@
                 pos: 0, 0
                 size: self.height, self.height
     GridLayout:
-        pos: 0, self.parent.top - self.height
+        id: scoreboard
+        pos: 100, self.parent.top - self.height
         cols: 1
         rows: 3
+        width: self.parent.width
         Label:
             color: 1, 0, 0, 1
             text: 'Estimate: ' + str(darts.estimate)
+            width: self.parent.width
         Label:
             color: 1, 0, 0, 1
-            text: 'Pi: ' + str(darts.PI)
+            text: 'Pi:           ' + str(darts.PI)
+            width: self.parent.width
         Label:
             color: 1, 0, 0, 1
             text: 'Iterations: ' + str(darts.iterations)
