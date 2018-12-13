@@ -41,53 +41,36 @@
         Color:
             rgba: self.r, self.g, 0, 1
         Ellipse:
-            pos: self.x / 100 * root.width, self.y / 100 * root.height
+            pos: self.x / self.parent_width * root.width, self.y / self.parent_width * root.height
             size: self.size
-
-
-#<Game>:
-#    speed_slider: speed_slider
-#    MDSlider:
-#        id: speed_slider
-#        min: 0
-#        max: 100
-#        x: 0
-#        y: 0
-#        height: 100
-#        width: self.parent.width
 
 
 <PiDarts>:
     id: darts
-    size_hint: 1, 1
     canvas:
         Color:
             rgb: 0.5, 0.5, 0.5, 1
         Rectangle:
             size: self.width, self.height
     GridLayout:
+        id: dartboard
         cols: 1
         rows: 1
-        pos: 0, 0
-        height: scoreboard.y
-        width: scoreboard.y
         canvas:
             Color:
-                rgb: 0.5, 0.5, 0.5, 1
-            Rectangle:
-                size: self.parent.height, self.parent.height
-        canvas:
-            Color:
+                group: 'board'
                 rgba: 1, 1, 1, 1
             Ellipse:
-                pos: 0, 0
-                size: self.parent.height, self.parent.height
+                group: 'target'
+                pos: round(darts.center_x - darts.height * 1/3), 0
+                size: round(darts.height * 2/3), round(darts.height * 2/3)
     MDCard:
-        pos: 20, self.parent.top - self.height - 20
-        width: self.parent.width - 40
+        id: scoreboard
+        height: darts.height * 1/3 - 40
+        width: darts.width - 40
+        pos: 20, darts.top - self.height - 20
         GridLayout:
-            id: scoreboard
-            pos: self.parent.pos
+            pos: darts.pos
             cols: 1
             rows: 3
             Label:
@@ -101,11 +84,7 @@
             Label:
                 color: 1, 0, 0, 1
                 text: 'Iterations: ' + str(darts.iterations)
-    #        Label:
-    #            color: 1, 0, 0, 1
-    #            text: 'Speed: ' + str(root.speed)
-    #            markup: True
-    #            pos: 0, 0
+
 
 <PiSeries>:
     id: series
@@ -121,16 +100,16 @@
         height: self.texture_size[1]
         width: self.parent.width
     MDCard:
+        id: scoreboard
         pos: 20, self.parent.top - self.height - 20
         width: self.parent.width - 40
         GridLayout:
-            id: scoreboard
             pos: self.parent.pos
             cols: 1
             rows: 3
             Label:
                 color: 1, 0, 0, 1
-                text: 'Estimate: ' + str(series.estimate)
+                text: 'Estimate: ' + str(series.estimate * 4)
                 width: self.parent.width
             Label:
                 color: 1, 0, 0, 1

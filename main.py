@@ -1,7 +1,4 @@
 from decimal import *
-
-from kivymd.card import MDCard
-
 getcontext().prec = 51
 from kivy.app import App
 from kivy.animation import Animation
@@ -35,10 +32,6 @@ from kivymd.slider import *
 from kivymd.theming import ThemeManager
 import math
 import random
-
-
-class ScoreBoard(MDCard):
-    pass
 
 
 class Game(Widget):
@@ -96,6 +89,8 @@ class Game(Widget):
 
 
 class Dart(RelativeLayout):
+    parent_width = NumericProperty(1)
+
     x = NumericProperty(0)
     y = NumericProperty(0)
 
@@ -106,24 +101,31 @@ class Dart(RelativeLayout):
         return self.g == 1
 
     def throw(self):
-        if self.parent.width > self.parent.height:
-            width = self.parent.height
-        else:
-            width = self.parent.width
+        is_hit = None
 
-        self.x = random.randint(0, width)
-        self.y = random.randint(0, width)
+        self.parent_width = self.parent.ids.dartboard.canvas.get_group('target')[0].size[0]
+        height = self.parent.ids.dartboard.canvas.get_group('target')[0].size[1]
 
-        radius = width / 2
+        if height > self.parent_width:
+            self.parent_width = height
 
-        is_hit = math.pow(self.x - radius, 2) + math.pow(self.y - radius, 2) < math.pow(radius, 2)
-        if is_hit:
-            self.g = 1
-        else:
-            self.r = 1
+        if self.parent_width != 1:
+            self.x = random.randint(0, self.parent_width)
+            self.y = random.randint(0, self.parent_width)
 
-        animation = Animation(size=(1, 1))
-        animation.start(self)
+            radius = self.parent_width / 2
+
+            is_hit = math.pow(self.x - radius, 2) + math.pow(self.y - radius, 2) < math.pow(radius, 2)
+            if is_hit:
+                self.g = 1
+            else:
+                self.r = 1
+
+            self.y += self.parent.ids.dartboard.canvas.get_group('target')[0].pos[1]
+            self.x += self.parent.ids.dartboard.canvas.get_group('target')[0].pos[0]
+
+            animation = Animation(size=(2, 2))
+            animation.start(self)
 
         return is_hit
 
@@ -158,7 +160,8 @@ class PiDarts(Game):
 
         is_hit = dart.throw()
 
-        self.add_to_result(is_hit)
+        if is_hit is not None:
+            self.add_to_result(is_hit)
 
         self.iterations += 1
 
