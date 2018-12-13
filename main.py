@@ -1,4 +1,7 @@
 from decimal import *
+
+from kivymd.card import MDCard
+
 getcontext().prec = 51
 from kivy.app import App
 from kivy.animation import Animation
@@ -34,6 +37,10 @@ import math
 import random
 
 
+class ScoreBoard(MDCard):
+    pass
+
+
 class Game(Widget):
     PI = ObjectProperty(
         Decimal('3.14159265358979323846264338327950288419716939937510')
@@ -49,12 +56,15 @@ class Game(Widget):
     def __init__(self, **kwargs):
         super(Game, self).__init__(**kwargs)
 
-        self.set_speed(False, 50)
+        self.set_speed(False, 100)
 
         # self.speed_slider.bind(value=self.set_speed)
         # self.speed_slider.value = 50
 
     def get_estimate(self):
+        pass
+
+    def get_iterations(self):
         pass
 
     def set_speed(self, slider, value):
@@ -77,7 +87,7 @@ class Game(Widget):
 
     def update(self, dt):
         self.estimate = self.get_estimate()
-        self.iterations += 1
+        self.iterations = self.get_iterations()
 
         self.check_accuracy()
 
@@ -131,6 +141,9 @@ class PiDarts(Game):
         else:
             self.misses = self.misses + 1
 
+    def get_iterations(self):
+        return self.iterations
+
     def get_estimate(self):
         return Decimal(
             Decimal(self.hits) / Decimal(self.hits + self.misses) * Decimal(4)
@@ -147,28 +160,38 @@ class PiDarts(Game):
 
         self.add_to_result(is_hit)
 
+        self.iterations += 1
+
         super().update(dt)
 
 
 class PiSeries(Game):
     i = 1
+    equation = StringProperty('pi = 4 * 1 / (')
+    estimate = ObjectProperty(Decimal(1))
     plus = True
 
     def __init__(self, **kwargs):
         super(PiSeries, self).__init__(**kwargs)
 
     def get_estimate(self):
-        return Decimal(-4) / Decimal(self.i * (1, -1)[self.plus])
+        return self.estimate
+
+    def get_iterations(self):
+        return self.iterations
 
     def update(self, dt):
         self.i += 2
         self.plus = self.plus == False
 
+        self.estimate = self.estimate + Decimal(1) / Decimal(self.i * (-1, 1)[self.plus])
+
+        self.iterations += 1
+
+        self.equation = self.equation + (' + ', ' - ')[self.plus] + '1/' + str(self.i)
+
         super().update(dt)
 
-
-class TheApp(Widget):
-    pass
 
 class PiApp(App):
     theme_cls = ThemeManager()
