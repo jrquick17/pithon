@@ -60,59 +60,90 @@
 <PiDarts>:
     id: darts
     size_hint: 1, 1
-    RelativeLayout:
+    canvas:
+        Color:
+            rgb: 0.5, 0.5, 0.5, 1
+        Rectangle:
+            size: self.width, self.height
+    GridLayout:
+        cols: 1
+        rows: 1
         pos: 0, 0
+        height: scoreboard.y
+        width: scoreboard.y
         canvas:
             Color:
                 rgb: 0.5, 0.5, 0.5, 1
             Rectangle:
-                size: self.height, self.height
-        canvas:
-            Color:
-                rgba: 0, 0, 0, 1
-            Rectangle:
-                pos:  0, 0
-                size: self.height, self.height
+                size: self.parent.height, self.parent.height
         canvas:
             Color:
                 rgba: 1, 1, 1, 1
             Ellipse:
                 pos: 0, 0
-                size: self.height, self.height
-    GridLayout:
-        id: scoreboard
-        pos: 100, self.parent.top - self.height
-        cols: 1
-        rows: 3
-        width: self.parent.width
-        Label:
-            color: 1, 0, 0, 1
-            text: 'Estimate: ' + str(darts.estimate)
-            width: self.parent.width
-        Label:
-            color: 1, 0, 0, 1
-            text: 'Pi:           ' + str(darts.PI)
-            width: self.parent.width
-        Label:
-            color: 1, 0, 0, 1
-            text: 'Iterations: ' + str(darts.iterations)
-#        Label:
-#            color: 1, 0, 0, 1
-#            text: 'Speed: ' + str(root.speed)
-#            markup: True
-#            pos: 0, 0
+                size: self.parent.height, self.parent.height
+    MDCard:
+        pos: 20, self.parent.top - self.height - 20
+        width: self.parent.width - 40
+        GridLayout:
+            id: scoreboard
+            pos: self.parent.pos
+            cols: 1
+            rows: 3
+            Label:
+                color: 1, 0, 0, 1
+                text: 'Estimate: ' + str(darts.estimate)
+                width: self.parent.width
+            Label:
+                color: 1, 0, 0, 1
+                text: 'Pi:           ' + str(darts.PI)
+                width: self.parent.width
+            Label:
+                color: 1, 0, 0, 1
+                text: 'Iterations: ' + str(darts.iterations)
+    #        Label:
+    #            color: 1, 0, 0, 1
+    #            text: 'Speed: ' + str(root.speed)
+    #            markup: True
+    #            pos: 0, 0
 
 <PiSeries>:
+    id: series
     canvas:
         Color:
             rgb: 0.5, 0.5, 0.5, 1
         Rectangle:
             size: self.width, self.height
     Label:
-        color: 1, 1, 1, 1
-        text: 'Estimate: ' + str(root.estimate)
-        markup: True
-        pos: root.center_x, root.center_y + 30
+        text: series.equation
+        text_size: self.width, None
+        size_hint: 1, 1
+        height: self.texture_size[1]
+        width: self.parent.width
+    MDCard:
+        pos: 20, self.parent.top - self.height - 20
+        width: self.parent.width - 40
+        GridLayout:
+            id: scoreboard
+            pos: self.parent.pos
+            cols: 1
+            rows: 3
+            Label:
+                color: 1, 0, 0, 1
+                text: 'Estimate: ' + str(series.estimate)
+                width: self.parent.width
+            Label:
+                color: 1, 0, 0, 1
+                text: 'Pi:           ' + str(series.PI)
+                width: self.parent.width
+            Label:
+                color: 1, 0, 0, 1
+                text: 'Iterations: ' + str(series.iterations)
+    #        Label:
+    #            color: 1, 0, 0, 1
+    #            text: 'Speed: ' + str(root.speed)
+    #            markup: True
+    #            pos: 0, 0
 
 
 NavigationLayout:
