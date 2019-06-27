@@ -1,3 +1,8 @@
+# About
+A hybrid mobile application written in Python with the Kivy framework in order to calculate Pi.
+
+* Visit [my personal website](htts://jrquick.com) for more cool projects!
+
 # Install
 ## Mac
 ```bash
