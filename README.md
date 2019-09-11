@@ -1,21 +1,33 @@
-# About
+# ng-minesweeper
+  
+![](example.png)
+
+## Index ##
+
+* [About](#about)
+* [Setup](#setup)
+
+## About
 A hybrid mobile application written in Python with the Kivy framework in order to calculate Pi.
 
 * Visit [my personal website](htts://jrquick.com) for more cool projects!
 
-# Install
-## Mac
-```bash
-sudo pip install pygments docutils
-brew install sdl2 sdl2_image sdl2_ttf sdl2_mixer gstreamer
+## Setup
 
-pip install cython
-pip install kivy
+### Install
 
-cd dependencies
-cd kivy-md
-py setup.py install
-```
+#### Mac
+`sudo pip install pygments docutils`
+`brew install sdl2 sdl2_image sdl2_ttf sdl2_mixer gstreamer`
+
+`pip install cython`
+`pip install kivy`
+
+`cd vendor/kivy-md && py setup.py install`
+
+### Run 
+    
+`python main.py`
 
 ### Syntax Highlighting
 #### IntelliJ
