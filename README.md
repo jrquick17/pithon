@@ -1,4 +1,4 @@
-# ng-minesweeper
+# pithon
   
 ![](example.png)
 
